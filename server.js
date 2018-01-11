@@ -93,7 +93,7 @@ app.post('/api/albums', function albumPost(req, res) {
     name: req.body.name,
     artistName: req.body.artistName,
     releaseDate: req.body.releaseDate,
-    genres: [ req.body.generes ]
+    genres: req.body.genres
   });
   console.log(req.body.name);
   console.log(req.body.artistName);

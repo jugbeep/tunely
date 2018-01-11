@@ -52,15 +52,33 @@ $(document).ready(function() {
 
     let formData = $(this).serialize();
     console.log(formData);
+
     $.post('./api/albums', formData, function() {
       console.log('for succesfully submitted');
     })
+    $(this).trigger("reset");
+    location.reload(true);
   })
-});
+
+function buildSongsHtml(songs) {
+  var songText = " -- ";
+  songs.forEach(function(song) {
+     songText = songText + "(" + song.trackNumber + ") " + song.name + " -- ";
+  });
+  var songsHtml  =
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Songs:</h4>" +
+  "                         <span>" + songText + "</span>" +
+  "                      </li>";
+  return songsHtml;
+}
 
 
 
 
+
+
+  
 
 
 // this function takes a single album and renders it to the page
@@ -77,19 +95,23 @@ function renderAlbum(album) {
   "                     <img class='img-fluid' src='" + "http://placehold.it/400x400'" +  " alt='album image'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
+
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
   "                        <span class='album-name'>" + album.name + "</span>" +
   "                      </li>" +
+
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
   "                        <span class='artist-name'>" +  album.artistName+ "</span>" +
   "                      </li>" +
+                         
   "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" +  album.releaseDate + "</span>" +
+  "                         <h4 class='inline-header'>Release Date:</h4>" +
+  "                         <span class='artist-releaseDate'>" +  album.releaseDate+ "</span>" +
   "                      </li>" +
+                        buildSongsHtml(album.songs) + 
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
@@ -98,6 +120,9 @@ function renderAlbum(album) {
   "          <!-- end one album -->";
 
   // render to the page with jQuery
+   
   $('#albums').append(albumHtml);
 
 }
+});
+
